@@ -46,6 +46,8 @@
         let score = 0;
         let balloons = [];
         let popSound = new Audio('pope.mp3');
+        let victorySound = new Audio('game-won.mp3');
+        let gameOverSound = new Audio('game-lost.mp3');
         let gameOver = false;
         let difficultyLevel = 1;
         let baseSpeed = 1;
@@ -175,6 +177,7 @@
                         // Check for victory
                         if (score >= 350) {
                             gameOver = true;
+                            victorySound.play().catch(() => {});
                             showVictory();
                             return true;
                         }
@@ -214,6 +217,7 @@
                         // Check for game over
                         if (score < 0) {
                             gameOver = true;
+                            gameOverSound.play().catch(() => {});
                             showGameOver();
                         }
                     }
