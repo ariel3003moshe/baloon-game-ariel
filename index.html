@@ -57,7 +57,27 @@
         balloonImg.src = 'redBaloon.png';
 
         const blackBalloonImg = new Image();
-        blackBalloonImg.src = 'blue.png';
+        blackBalloonImg.src = 'redBaloon.png';
+        blackBalloonImg.crossOrigin = 'anonymous';
+        
+        // Create black balloon canvas
+        const blackCanvas = document.createElement('canvas');
+        blackCanvas.width = 100;
+        blackCanvas.height = 140;
+        const blackCtx = blackCanvas.getContext('2d');
+        
+        // Draw black balloon when image loads
+        balloonImg.onload = function() {
+            // Create black version
+            blackCtx.drawImage(balloonImg, 0, 0, 100, 140);
+            const imgData = blackCtx.getImageData(0, 0, 100, 140);
+            for (let i = 0; i < imgData.data.length; i += 4) {
+                imgData.data[i] = 30;     // R
+                imgData.data[i+1] = 30;   // G
+                imgData.data[i+2] = 30;   // B
+            }
+            blackCtx.putImageData(imgData, 0, 0);
+        };
 
         const skyImg = new Image();
         skyImg.src = 'sky.png';
@@ -86,7 +106,7 @@
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 if (this.isBlack) {
-                    ctx.drawImage(blackBalloonImg, -this.size/2, -this.size/2, this.size, this.size);
+                    ctx.drawImage(blackCanvas, -this.size/2, -this.size/2, this.size, this.size * 1.4);
                 } else {
                     ctx.drawImage(balloonImg, -this.size/2, -this.size/2, this.size, this.size);
                 }
