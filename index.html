@@ -171,6 +171,13 @@
                         balloons.splice(i, 1);
                         score += 10;
                         scoreElement.textContent = 'Score: ' + score;
+                        
+                        // Check for victory
+                        if (score >= 350) {
+                            gameOver = true;
+                            showVictory();
+                            return true;
+                        }
                     }
                     
                     // Increase difficulty every 100 points
@@ -225,6 +232,21 @@
             ctx.font = 'bold 48px Arial';
             ctx.textAlign = 'center';
             ctx.fillText('נפסל!', canvas.width/2, canvas.height/2);
+            
+            ctx.fillStyle = 'white';
+            ctx.font = '24px Arial';
+            ctx.fillText('הקש לחיצה למשחק חדש', canvas.width/2, canvas.height/2 + 50);
+        }
+
+        // Show victory message
+        function showVictory() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#33ff33';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('ניצחת! 🎉', canvas.width/2, canvas.height/2);
             
             ctx.fillStyle = 'white';
             ctx.font = '24px Arial';
